@@ -1,0 +1,10 @@
+ons:
+ access-key: LTAI7PHfz2Eo5CWF
+ secret-key: BOV5XmbQSpg3S9BjBHVvkgCB2mxI8v
+
+consumer:
+  test: CID_zym_test
+provider:
+  test: PID_zym_test
+topic:
+  test: crm_test
