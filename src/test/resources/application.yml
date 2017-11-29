@@ -8,3 +8,5 @@ provider:
   test: PID_zym_test
 topic:
   test: crm_test
+server:
+  port: 8081

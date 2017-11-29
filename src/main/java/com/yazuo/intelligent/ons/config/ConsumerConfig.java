@@ -24,7 +24,7 @@ public class ConsumerConfig extends AbstractConfig implements ExportOnsConfig {
     @Override
     public Properties export() {
         Properties properties = super.export();
-        properties.put(ConsumerId,environment.resolveRequiredPlaceholders(consumerId));
+        properties.put(ConsumerId,consumerId);
         return properties;
     }
 }

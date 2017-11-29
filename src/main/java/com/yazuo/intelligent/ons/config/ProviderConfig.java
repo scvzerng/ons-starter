@@ -22,7 +22,7 @@ public class ProviderConfig extends AbstractConfig {
     @Override
     public Properties export() {
         Properties properties = super.export();
-        properties.put(SendMsgTimeoutMillis,environment.resolveRequiredPlaceholders(timeOut));
+        properties.put(SendMsgTimeoutMillis,timeOut);
         return properties;
     }
 }

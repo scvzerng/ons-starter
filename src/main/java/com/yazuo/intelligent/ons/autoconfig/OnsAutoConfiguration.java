@@ -2,13 +2,12 @@ package com.yazuo.intelligent.ons.autoconfig;
 
 import com.yazuo.intelligent.ons.codec.FastJsonMessageDecode;
 import com.yazuo.intelligent.ons.codec.MessageDecode;
-import com.yazuo.intelligent.ons.factory.ConsumerFactory;
-import com.yazuo.intelligent.ons.factory.DefaultConsumerFactory;
-import com.yazuo.intelligent.ons.factory.DefaultProducerFactory;
-import com.yazuo.intelligent.ons.factory.ProducerFactory;
-import com.yazuo.intelligent.ons.factory.DefaultMethodListenerFactory;
-import com.yazuo.intelligent.ons.factory.MethodListenerFactory;
+import com.yazuo.intelligent.ons.config.OnsProperties;
+import com.yazuo.intelligent.ons.factory.OnsBeanFactory;
+import com.yazuo.intelligent.ons.factory.OnsFactoryBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -19,22 +18,13 @@ public class OnsAutoConfiguration {
     public MessageDecode messageDecode(){
         return new FastJsonMessageDecode();
     }
-
     @Bean
     @ConditionalOnMissingBean
-    public MethodListenerFactory methodListenerFactory(){
-        return new DefaultMethodListenerFactory();
+    public OnsBeanFactory producerFactory(){
+        return new OnsFactoryBean();
     }
 
-    @Bean
-    @ConditionalOnMissingBean
-    public ConsumerFactory consumerFactory(){
-        return new DefaultConsumerFactory();
-    }
 
-    @Bean
-    @ConditionalOnMissingBean
-    public ProducerFactory producerFactory(){
-        return new DefaultProducerFactory();
-    }
+
+
 }

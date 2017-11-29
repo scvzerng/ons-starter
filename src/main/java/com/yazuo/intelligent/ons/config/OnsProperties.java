@@ -5,7 +5,7 @@ import com.aliyun.openservices.shade.com.alibaba.fastjson.annotation.JSONField;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 
-@ConfigurationProperties("ons")
+@ConfigurationProperties(prefix = "ons")
 public class OnsProperties {
     /**
      * AccessKey 阿里云身份验证，在阿里云服务器管理控制台创建
@@ -22,21 +22,6 @@ public class OnsProperties {
      */
     @JSONField(name = PropertyKeyConst.ONSAddr)
     private String address;
-    /**
-     * 您在控制台创建的Producer ID
-     */
-    @JSONField(name = PropertyKeyConst.ProducerId)
-    private String producerId;
-    /**
-     * 您在控制台创建的 Consumer ID
-     */
-    @JSONField(name = PropertyKeyConst.ConsumerId)
-    private String consumerId;
-    /**
-     * 设置发送超时时间，单位毫秒
-     */
-    @JSONField(name = PropertyKeyConst.SendMsgTimeoutMillis)
-    private Integer timeOut = 3000;
 
     public String getAccessKey() {
         return accessKey;
@@ -62,31 +47,4 @@ public class OnsProperties {
         this.address = address;
     }
 
-    public String getProducerId() {
-        return producerId;
-    }
-
-    public void setProducerId(String producerId) {
-        this.producerId = producerId;
-    }
-
-    public Integer getTimeOut() {
-        return timeOut;
-    }
-
-    public void setTimeOut(int timeOut) {
-        this.timeOut = timeOut;
-    }
-
-    public String getConsumerId() {
-        return consumerId;
-    }
-
-    public void setConsumerId(String consumerId) {
-        this.consumerId = consumerId;
-    }
-
-    public void setTimeOut(Integer timeOut) {
-        this.timeOut = timeOut;
-    }
 }

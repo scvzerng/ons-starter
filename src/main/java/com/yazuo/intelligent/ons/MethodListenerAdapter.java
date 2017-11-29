@@ -1,20 +1,33 @@
-package com.yazuo.intelligent.ons.listener;
+package com.yazuo.intelligent.ons;
 
 import com.aliyun.openservices.ons.api.*;
+import com.aliyun.openservices.shade.com.alibaba.fastjson.JSON;
 import com.yazuo.intelligent.ons.annotation.MessageBody;
+import com.yazuo.intelligent.ons.codec.FastJsonMessageDecode;
 import com.yazuo.intelligent.ons.codec.MessageDecode;
+import com.yazuo.intelligent.ons.config.ConsumerConfig;
+import com.yazuo.intelligent.ons.factory.OnsBeanFactory;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.ReflectionUtils;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toList;
+
+/**
+ * description
+ * <p>
+ * 2017-11-29 15:22
+ *
+ * @author scvzerng
+ **/
 @Slf4j
-public abstract class AbstractMethodListener<T extends Annotation> implements MethodListener<T> {
+public class MethodListenerAdapter implements Admin,MessageListener {
+    public static final MessageDecode DEFAULT = new FastJsonMessageDecode();
     /**
      * 实例对象
      */
@@ -30,27 +43,47 @@ public abstract class AbstractMethodListener<T extends Annotation> implements Me
     /**
      * 解码器
      */
-    protected MessageDecode decode;
+    @Setter
+    protected MessageDecode decode = DEFAULT;
     /**
      * 消费者
      */
     protected Consumer consumer;
-    /**
-     * 监听器注解
-     */
-    protected T listener;
+    protected ConsumerConfig consumerConfig;
 
-    public AbstractMethodListener(Method method, Object bean, MessageDecode decode, Consumer consumer, T listener) {
-        this.decode = decode;
+    public MethodListenerAdapter(Object bean, Method method,ConsumerConfig consumerConfig,OnsBeanFactory<Consumer,Producer> beanFactory) {
         this.method = method;
         this.bean = bean;
-        this.listener = listener;
-        this.consumer = consumer;
+        this.consumerConfig = consumerConfig;
+        this.consumer = beanFactory.createConsumer(consumerConfig);
         this.parameters = Stream.iterate(0, i->++i)
                 .limit(method.getParameterCount())
                 .map(i-> new MethodParameter(method,i))
                 .collect(toList());
+    }
 
+    @Override
+    public boolean isStarted() {
+        return this.consumer.isStarted();
+    }
+
+    @Override
+    public boolean isClosed() {
+        return this.consumer.isClosed();
+    }
+
+    @Override
+    public void start() {
+       this.consumer.subscribe(consumerConfig.getTopic(),consumerConfig.getExpression(),this);
+       this.consumer.start();
+       log.info("topic {} subscribe",JSON.toJSONString(consumerConfig));
+    }
+
+    @Override
+    public void shutdown() {
+      this.consumer.unsubscribe(consumerConfig.getTopic());
+      this.consumer.shutdown();
+        log.info("topic {} unsubscribe",JSON.toJSONString(consumerConfig));
     }
 
 
@@ -107,4 +140,13 @@ public abstract class AbstractMethodListener<T extends Annotation> implements Me
         }
     }
 
+    @Override
+    public String toString() {
+        return JSON.toJSONString(consumerConfig);
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
 }

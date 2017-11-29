@@ -30,6 +30,3 @@ public class TestComponent {
 #### 拓展 实现接口后直接注入
 
 - 消息解码 `MessageDecode 默认FastJsonMessageDecode`
-- 生产者工厂 `ProducerFactory 默认 DefaultProducerFactory`
-- 消费者工厂 `ConsumerFactory 默认 DefaultConsumerFactory`
-- 监听注解自定义 `MethodListenerFactory 默认 DefaultMethodListenerFactory` `MethodListener 默认 DefaultMethodListener`

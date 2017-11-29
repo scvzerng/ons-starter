@@ -3,7 +3,7 @@ package com.yazuo.test;
 import com.aliyun.openservices.ons.api.ConsumeContext;
 import com.aliyun.openservices.ons.api.Message;
 import com.aliyun.openservices.shade.com.alibaba.fastjson.JSON;
-import com.yazuo.intelligent.ons.ONSTemplate;
+import com.yazuo.intelligent.ons.OnsOperations;
 import com.yazuo.intelligent.ons.annotation.MessageBody;
 import com.yazuo.intelligent.ons.annotation.OnsProducer;
 import com.yazuo.intelligent.ons.annotation.OnsListener;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/message")
 public class TestComponent {
     @OnsProducer(producerId = "${provider.test}")
-    private ONSTemplate template;
+    private OnsOperations template;
 
    @GetMapping("/{text}")
     public void sendMessage(@PathVariable String text){
