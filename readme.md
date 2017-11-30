@@ -6,7 +6,7 @@
 - 消息体多个参数的情况下在参数上标注@MessageBody会把消息转换成对应的对象
 - 目前只支持String类型的或者JSON字符串格式的消息
 - @SendTo发送返回值到指定topic
-#### example
+#### example1
 
 ```java
 @RestController
@@ -19,17 +19,34 @@ public class TestComponent {
     public void sendMessage(@PathVariable String text){
        template.send("crm_test",text);
    }
-   @GetMapping("/{text}")
-  id
-  // public Person sendMessage(@PathVariable String text){
-   
-   //return JSON.parseObject(text,Person.class);
-   //}
+ 
    @OnsListener(topic = "${topic.test}",consumerId = "${consumer.test}")
     public void test(ConsumeContext context, @MessageBody Person person, Message message){
        System.out.println(JSON.toJSON(person));
    }
 }
+```
+
+#### example2
+
+```java
+@RestController
+@RequestMapping("/message")
+public class TestComponent {
+
+   @GetMapping("/{text}")
+   @SendTo(id = "${provider.test}",topic = "crm_test")
+    public Person sendMessage(@PathVariable String text){
+
+       return JSON.parseObject(text,Person.class);
+   }
+
+   @OnsListener(topic = "${topic.test}", id = "${consumer.test}")
+    public void test(ConsumeContext context, @MessageBody Person person, Message message){
+       System.out.println(JSON.toJSON(person));
+   }
+}
+
 ```
 
 #### 拓展 实现接口后直接注入
