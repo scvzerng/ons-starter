@@ -50,19 +50,6 @@ public class ListenerConfig extends AbstractConfig implements KeyGenerator {
         this.consumerId = consumerId;
     }
 
-
-
-    @Override
-    public synchronized boolean equals(Object o) {
-        if(!(o instanceof ListenerConfig)) return false;
-        ListenerConfig config = (ListenerConfig) o;
-        if(super.equals(o)){
-            return true;
-        }
-
-        return config.getConsumerId().equals(this.getConsumerId())&&config.getTopic().equals(this.getTopic());
-    }
-
     @Override
     public String generate() {
         return consumerId;

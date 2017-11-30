@@ -73,14 +73,14 @@ public class ConsumerBean implements OnsBean,MessageListener{
     public void start() {
        this.consumer.subscribe(consumerConfig.getTopic(),consumerConfig.getExpression(),this);
        this.consumer.start();
-       log.info("topic {} subscribe",JSON.toJSONString(consumerConfig));
+       log.info("topic:{} tag:{} id:{} subscribe",consumerConfig.getTopic(),consumerConfig.getExpression(),consumerConfig.getConsumerId());
     }
 
     @Override
     public void shutdown() {
       this.consumer.unsubscribe(consumerConfig.getTopic());
       this.consumer.shutdown();
-        log.info("topic {} unsubscribe",JSON.toJSONString(consumerConfig));
+        log.info("topic:{} tag:{} id:{} unsubscribe",consumerConfig.getTopic(),consumerConfig.getExpression(),consumerConfig.getConsumerId());
     }
 
 
@@ -137,15 +137,7 @@ public class ConsumerBean implements OnsBean,MessageListener{
         }
     }
 
-    @Override
-    public String toString() {
-        return JSON.toJSONString(consumerConfig);
-    }
 
-    @Override
-    public int hashCode() {
-        return toString().hashCode();
-    }
 
     @Override
     public String generate() {
