@@ -1,7 +1,7 @@
 package com.yazuo.intelligent.ons.annotation;
 
-import com.yazuo.intelligent.ons.OnsListenerAnnotationBeanPostProcessor;
-import com.yazuo.intelligent.ons.OnsProducerAnnotationBeanPostProcessor;
+import com.yazuo.intelligent.ons.parser.OnsListenerAnnotationBeanPostProcessor;
+import com.yazuo.intelligent.ons.parser.OnsProducerAnnotationBeanPostProcessor;
 import org.springframework.context.annotation.Import;
 
 import java.lang.annotation.*;

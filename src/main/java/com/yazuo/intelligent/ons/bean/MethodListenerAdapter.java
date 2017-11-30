@@ -1,13 +1,11 @@
-package com.yazuo.intelligent.ons;
+package com.yazuo.intelligent.ons.bean;
 
 import com.aliyun.openservices.ons.api.*;
 import com.aliyun.openservices.shade.com.alibaba.fastjson.JSON;
 import com.yazuo.intelligent.ons.annotation.MessageBody;
-import com.yazuo.intelligent.ons.codec.FastJsonMessageDecode;
-import com.yazuo.intelligent.ons.codec.MessageDecode;
-import com.yazuo.intelligent.ons.config.ConsumerConfig;
+import com.yazuo.intelligent.ons.codec.MessageCodec;
+import com.yazuo.intelligent.ons.config.ListenerConfig;
 import com.yazuo.intelligent.ons.factory.OnsBeanFactory;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.ReflectionUtils;
@@ -26,8 +24,7 @@ import static java.util.stream.Collectors.toList;
  * @author scvzerng
  **/
 @Slf4j
-public class MethodListenerAdapter implements Admin,MessageListener {
-    public static final MessageDecode DEFAULT = new FastJsonMessageDecode();
+public class MethodListenerAdapter implements OnsBean,MessageListener{
     /**
      * 实例对象
      */
@@ -43,17 +40,17 @@ public class MethodListenerAdapter implements Admin,MessageListener {
     /**
      * 解码器
      */
-    @Setter
-    protected MessageDecode decode = DEFAULT;
+    protected MessageCodec codec ;
     /**
      * 消费者
      */
     protected Consumer consumer;
-    protected ConsumerConfig consumerConfig;
+    protected ListenerConfig consumerConfig;
 
-    public MethodListenerAdapter(Object bean, Method method,ConsumerConfig consumerConfig,OnsBeanFactory<Consumer,Producer> beanFactory) {
+    public MethodListenerAdapter(Object bean, Method method, ListenerConfig consumerConfig, OnsBeanFactory<Consumer,Producer> beanFactory,MessageCodec codec) {
         this.method = method;
         this.bean = bean;
+        this.codec = codec;
         this.consumerConfig = consumerConfig;
         this.consumer = beanFactory.createConsumer(consumerConfig);
         this.parameters = Stream.iterate(0, i->++i)
@@ -97,7 +94,7 @@ public class MethodListenerAdapter implements Admin,MessageListener {
      * @return
      */
     private Object[] singleParam(MethodParameter parameter,Message message){
-        return new Object[]{decode.decode(message,null,parameter.getParameterType())};
+        return new Object[]{codec.deserialze(message,null,parameter.getParameterType())};
 
     }
 
@@ -110,7 +107,7 @@ public class MethodListenerAdapter implements Admin,MessageListener {
     private Object[] multiParam(Message message,ConsumeContext context){
         return parameters.stream().map(parameter -> {
             if(parameter.hasParameterAnnotation(MessageBody.class)){
-                return decode.decode(message,context,parameter.getParameterType());
+                return codec.deserialze(message,context,parameter.getParameterType());
             }
 
             if(parameter.getParameterType().isAssignableFrom(ConsumeContext.class)){
@@ -149,4 +146,11 @@ public class MethodListenerAdapter implements Admin,MessageListener {
     public int hashCode() {
         return toString().hashCode();
     }
+
+    @Override
+    public String generate() {
+        return consumerConfig.getConsumerId();
+    }
+
+
 }

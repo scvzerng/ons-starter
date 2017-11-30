@@ -1,52 +1,34 @@
-package com.yazuo.intelligent.ons;
+package com.yazuo.intelligent.ons.bean;
 
-import com.aliyun.openservices.ons.api.Admin;
 import com.aliyun.openservices.ons.api.Message;
 import com.aliyun.openservices.ons.api.Producer;
 import com.aliyun.openservices.ons.api.SendResult;
 import com.aliyun.openservices.shade.com.alibaba.fastjson.JSON;
-import com.yazuo.intelligent.ons.builder.MessageBuilder;
-import com.yazuo.intelligent.ons.config.ProviderConfig;
+import com.yazuo.intelligent.ons.config.ProducerConfig;
 import com.yazuo.intelligent.ons.factory.OnsBeanFactory;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.function.Consumer;
 
 @Slf4j
-public class ProducerAdapter implements OnsOperations,Admin {
+public class ProducerBean implements OnsOperations,OnsBean {
     private Producer producer;
     @Getter
-    private ProviderConfig providerConfig;
+    private ProducerConfig providerConfig;
 
-    public ProducerAdapter(ProviderConfig providerConfig, OnsBeanFactory<com.aliyun.openservices.ons.api.Consumer,Producer> onsBeanFactory) {
+    public ProducerBean(ProducerConfig providerConfig, OnsBeanFactory<com.aliyun.openservices.ons.api.Consumer,Producer> onsBeanFactory) {
         this.providerConfig = providerConfig;
         this.producer = onsBeanFactory.createProducer(providerConfig);
     }
 
 
     @Override
-    public SendResult send(Message message) {
+    public SendResult syncSend(Message message) {
         return producer.send(message);
     }
 
-    @Override
-    public SendResult send(MessageBuilder builder) {
-        return producer.send(builder.build());
-    }
 
-    @Override
-    public void send(String topic, String message) {
-        send(topic,message,null);
-    }
 
-    @Override
-    public void send(String topic, String message, Consumer<SendResult> resultConsumer) {
-
-        SendResult result = producer.send(new MessageBuilder().setTopic(topic).setBody(message.getBytes()).build());
-        if(resultConsumer!=null) resultConsumer.accept(result);
-
-    }
 
     @Override
     public boolean isStarted() {
@@ -68,5 +50,10 @@ public class ProducerAdapter implements OnsOperations,Admin {
     public void shutdown() {
         producer.shutdown();
         log.info("ons {} shutdown", JSON.toJSONString(providerConfig));
+    }
+
+    @Override
+    public String generate() {
+        return providerConfig.getProducerId();
     }
 }

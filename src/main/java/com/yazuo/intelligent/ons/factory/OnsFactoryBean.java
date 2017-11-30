@@ -3,7 +3,8 @@ package com.yazuo.intelligent.ons.factory;
 import com.aliyun.openservices.ons.api.Consumer;
 import com.aliyun.openservices.ons.api.ONSFactory;
 import com.aliyun.openservices.ons.api.Producer;
-import com.yazuo.intelligent.ons.config.ExportOnsConfig;
+import com.yazuo.intelligent.ons.config.ListenerConfig;
+import com.yazuo.intelligent.ons.config.ProducerConfig;
 
 /**
  * description
@@ -17,12 +18,12 @@ public  class OnsFactoryBean implements OnsBeanFactory<Consumer,Producer> {
 
 
     @Override
-    public Consumer createConsumer(ExportOnsConfig config) {
-        return ONSFactory.createConsumer(config.export());
+    public Consumer createConsumer(ListenerConfig config) {
+        return ONSFactory.createConsumer(config);
     }
 
     @Override
-    public Producer createProducer(ExportOnsConfig config) {
-        return ONSFactory.createProducer(config.export());
+    public Producer createProducer(ProducerConfig config) {
+        return ONSFactory.createProducer(config);
     }
 }

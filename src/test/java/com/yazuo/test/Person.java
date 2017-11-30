@@ -1,8 +1,8 @@
 package com.yazuo.test;
 
-import com.yazuo.intelligent.ons.Key;
+import com.yazuo.intelligent.ons.bean.KeyGenerator;
 
-public class Person implements Key {
+public class Person implements KeyGenerator {
     private String name;
     private Integer age;
 
@@ -24,7 +24,7 @@ public class Person implements Key {
 
 
     @Override
-    public String generateKey() {
+    public String generate() {
         return name;
     }
 }

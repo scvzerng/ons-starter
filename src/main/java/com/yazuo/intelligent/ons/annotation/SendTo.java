@@ -31,5 +31,7 @@ public @interface SendTo {
      */
     String topic();
 
+    String tag() default "DEFAULT";
+
     ReturnType returnType() default ReturnType.VOID;
 }

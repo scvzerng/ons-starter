@@ -1,6 +1,7 @@
 package com.yazuo.intelligent.ons.factory;
 
-import com.yazuo.intelligent.ons.config.ExportOnsConfig;
+import com.yazuo.intelligent.ons.config.ListenerConfig;
+import com.yazuo.intelligent.ons.config.ProducerConfig;
 
 /**
  * description
@@ -11,7 +12,7 @@ import com.yazuo.intelligent.ons.config.ExportOnsConfig;
  **/
 public interface  OnsBeanFactory<C,P>  {
 
-    C createConsumer(ExportOnsConfig config);
-    P createProducer(ExportOnsConfig config);
+    C createConsumer(ListenerConfig config);
+    P createProducer(ProducerConfig config);
 
 }
