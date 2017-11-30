@@ -53,4 +53,3 @@ public class TestComponent {
 
 - 消息解码 `MessageDecode 默认FastJsonMessageDecode`
 
-#### 注意 每个OnsListener注解都会生成一个 Consumer实例 谨慎使用
