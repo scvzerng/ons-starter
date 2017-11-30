@@ -1,7 +1,7 @@
 package com.yazuo.intelligent.ons.parser;
 
 import com.yazuo.intelligent.ons.annotation.OnsListener;
-import com.yazuo.intelligent.ons.bean.MethodListenerAdapter;
+import com.yazuo.intelligent.ons.bean.ConsumerBean;
 import com.yazuo.intelligent.ons.config.ListenerConfig;
 import com.yazuo.intelligent.ons.config.OnsProperties;
 import com.yazuo.intelligent.ons.codec.MessageCodec;
@@ -24,8 +24,8 @@ public class OnsListenerAnnotationBeanPostProcessor extends OnsAnnotationBeanPos
 
 
     @Override
-    protected MethodListenerAdapter processMethodAnnotation(Object bean, Method method, ListenerConfig config) {
-        return new MethodListenerAdapter(bean,method, config,factoryBean,decode);
+    protected ConsumerBean processMethodAnnotation(Object bean, Method method, ListenerConfig config) {
+        return new ConsumerBean(bean,method, config,factoryBean,decode);
     }
 
     @Override

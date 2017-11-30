@@ -46,6 +46,6 @@ public class OnsProducerAnnotationBeanPostProcessor extends OnsAnnotationBeanPos
     }
 
     public OnsOperations getOnsBean(SendTo sendTo){
-        return (OnsOperations) beans.get(environment.resolvePlaceholders(sendTo.producerId()));
+        return (OnsOperations) beans.get(environment.resolvePlaceholders(sendTo.id()));
     }
 }

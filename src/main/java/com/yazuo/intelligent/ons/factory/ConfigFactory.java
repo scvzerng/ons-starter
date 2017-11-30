@@ -34,13 +34,13 @@ public class ConfigFactory {
         AbstractConfig config;
         if(annotation.annotationType().isAssignableFrom(OnsListener.class)){
             ListenerConfig listenerConfig = new ListenerConfig();
-            listenerConfig.setConsumerId((String) annotationAttrs.get("consumerId"));
+            listenerConfig.setConsumerId((String) annotationAttrs.get("id"));
             listenerConfig.setExpression((String) annotationAttrs.get("expression"));
             listenerConfig.setTopic((String) annotationAttrs.get("topic"));
             config = listenerConfig;
         }else{
             ProducerConfig producerConfig = new ProducerConfig();
-            producerConfig.setProducerId((String) annotationAttrs.get("producerId"));
+            producerConfig.setProducerId((String) annotationAttrs.get("id"));
             producerConfig.setTopic((String) annotationAttrs.get("topic"));
             producerConfig.setTag((String) annotationAttrs.get("tag"));
             producerConfig.setTimeOut((String) annotationAttrs.get("sendMsgTimeoutMillis"));

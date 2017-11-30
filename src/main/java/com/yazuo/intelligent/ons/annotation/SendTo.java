@@ -19,7 +19,7 @@ public @interface SendTo {
     /**
      * 您在控制台创建的Producer ID
      */
-    String producerId();
+    String id();
     /**
      * 设置发送超时时间，单位毫秒
      */

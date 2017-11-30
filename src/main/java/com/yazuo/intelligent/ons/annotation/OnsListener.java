@@ -10,5 +10,5 @@ import java.lang.annotation.Target;
 public @interface OnsListener {
     String topic();
     String expression() default "*";
-    String consumerId();
+    String id();
 }

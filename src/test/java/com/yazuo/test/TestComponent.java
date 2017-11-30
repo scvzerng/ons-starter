@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestComponent {
 
    @GetMapping("/{text}")
-   @SendTo(producerId = "${provider.test}",topic = "crm_test")
+   @SendTo(id = "${provider.test}",topic = "crm_test")
     public Person sendMessage(@PathVariable String text){
 
        return JSON.parseObject(text,Person.class);
    }
 
-   @OnsListener(topic = "${topic.test}",consumerId = "${consumer.test}")
+   @OnsListener(topic = "${topic.test}", id = "${consumer.test}")
     public void test(ConsumeContext context, @MessageBody Person person, Message message){
        System.out.println(JSON.toJSON(person));
    }

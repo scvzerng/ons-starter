@@ -24,7 +24,7 @@ import static java.util.stream.Collectors.toList;
  * @author scvzerng
  **/
 @Slf4j
-public class MethodListenerAdapter implements OnsBean,MessageListener{
+public class ConsumerBean implements OnsBean,MessageListener{
     /**
      * 实例对象
      */
@@ -47,7 +47,7 @@ public class MethodListenerAdapter implements OnsBean,MessageListener{
     protected Consumer consumer;
     protected ListenerConfig consumerConfig;
 
-    public MethodListenerAdapter(Object bean, Method method, ListenerConfig consumerConfig, OnsBeanFactory<Consumer,Producer> beanFactory,MessageCodec codec) {
+    public ConsumerBean(Object bean, Method method, ListenerConfig consumerConfig, OnsBeanFactory<Consumer,Producer> beanFactory, MessageCodec codec) {
         this.method = method;
         this.bean = bean;
         this.codec = codec;
