@@ -1,6 +1,8 @@
 package com.yazuo.test;
 
-public class Person {
+import com.yazuo.intelligent.ons.Key;
+
+public class Person implements Key {
     private String name;
     private Integer age;
 
@@ -18,5 +20,11 @@ public class Person {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+
+    @Override
+    public String generateKey() {
+        return name;
     }
 }

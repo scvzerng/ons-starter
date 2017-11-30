@@ -8,16 +8,18 @@ import com.aliyun.openservices.shade.com.alibaba.fastjson.JSON;
 import com.yazuo.intelligent.ons.builder.MessageBuilder;
 import com.yazuo.intelligent.ons.config.ProviderConfig;
 import com.yazuo.intelligent.ons.factory.OnsBeanFactory;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.function.Consumer;
 
 @Slf4j
-public class FieldProducerAdapter implements OnsOperations,Admin {
+public class ProducerAdapter implements OnsOperations,Admin {
     private Producer producer;
+    @Getter
     private ProviderConfig providerConfig;
 
-    public FieldProducerAdapter(ProviderConfig providerConfig, OnsBeanFactory<com.aliyun.openservices.ons.api.Consumer,Producer> onsBeanFactory) {
+    public ProducerAdapter(ProviderConfig providerConfig, OnsBeanFactory<com.aliyun.openservices.ons.api.Consumer,Producer> onsBeanFactory) {
         this.providerConfig = providerConfig;
         this.producer = onsBeanFactory.createProducer(providerConfig);
     }

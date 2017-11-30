@@ -19,6 +19,9 @@ public class ProviderConfig extends AbstractConfig {
      */
     private String timeOut;
 
+    private String topic;
+    private String tag;
+
     @Override
     public Properties export() {
         Properties properties = super.export();
