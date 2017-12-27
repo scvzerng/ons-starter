@@ -21,7 +21,6 @@
             <dependency>
                 <groupId>com.aliyun.openservices</groupId>
                 <artifactId>ons-client</artifactId>
-                <version>1.7.0.Final</version>
             </dependency>
 
             <dependency>
@@ -35,7 +34,6 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.16.18</version>
                 <optional>true</optional>
             </dependency>
             <dependency>
@@ -45,6 +43,17 @@
             </dependency>
 
     </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.yazuo.intelligent</groupId>
+                <artifactId>dependencies</artifactId>
+                <version>CRM.S0</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <build>
         <plugins>
             <plugin>
