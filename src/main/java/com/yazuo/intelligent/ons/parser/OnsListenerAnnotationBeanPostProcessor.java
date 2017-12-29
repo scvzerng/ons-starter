@@ -30,7 +30,7 @@ public class OnsListenerAnnotationBeanPostProcessor extends OnsAnnotationBeanPos
 
     @Override
     protected Annotation getAnnotationClass(Method method) {
-        return method.getAnnotation(OnsListener.class);
+        return method.getAnnotation(onsProperties.getListenerAnnotation());
     }
 
 

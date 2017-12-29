@@ -2,10 +2,16 @@ package com.yazuo.intelligent.ons.config;
 
 import com.aliyun.openservices.ons.api.PropertyKeyConst;
 import com.aliyun.openservices.shade.com.alibaba.fastjson.annotation.JSONField;
+import com.yazuo.intelligent.ons.annotation.OnsListener;
+import com.yazuo.intelligent.ons.annotation.SendTo;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.lang.annotation.Annotation;
 
 
 @ConfigurationProperties(prefix = "ons")
+@Data
 public class OnsProperties {
     /**
      * AccessKey 阿里云身份验证，在阿里云服务器管理控制台创建
@@ -22,29 +28,12 @@ public class OnsProperties {
      */
     @JSONField(name = PropertyKeyConst.ONSAddr)
     private String address;
+    /**
+     * 监听注解
+     */
+    private Class<? extends Annotation> listenerAnnotation = OnsListener.class;
+    private Class<? extends Annotation> sendAnnotation = SendTo.class;
 
-    public String getAccessKey() {
-        return accessKey;
-    }
 
-    public void setAccessKey(String accessKey) {
-        this.accessKey = accessKey;
-    }
-
-    public String getSecretKey() {
-        return secretKey;
-    }
-
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
 }
